@@ -1,13 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route('/')
-def index_home(name=None):
-    return render_template('index.html', name=name)
+def index_home():
+    return render_template('index.html')
 
-@app.route('/test')
+@app.route('/test', methods=['GET'])
 def index_test():
-    return "<p>helloworld</p>"
+    if request.method == 'GET':
+        print("GET!")
+        return render_template('index2.html')
+    else:
+        return "<p>error</p>"
 
-app.run(debug = True)
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5000, debug=True)
